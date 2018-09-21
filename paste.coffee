@@ -180,6 +180,12 @@ class Paste
       .addClass 'pastable'
     @_container.on 'paste', (ev)=>
       # return ev.preventDefault() unless ev.currentTarget == ev.target
+
+      # KW MOD START
+      # Modification to handle paste event in ckeditor (with child elements)
+      return ev.preventDefault() unless $(ev.target).closest($(ev.currentTarget))
+      # KW MOD END
+
       @originalEvent = (if ev.originalEvent != null then ev.originalEvent else null)
       @_paste_event_fired = true
       if ev.originalEvent?.clipboardData?
