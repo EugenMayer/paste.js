@@ -20,6 +20,27 @@ https://github.com/layerssss/paste.js
     return pm._container;
   };
 
+  $.fn.pastable = function() {
+    var el, elem, j, len, ref;
+    ref = this;
+    for (j = 0, len = ref.length; j < len; j++) {
+      el = ref[j];
+      if (el._pastable) {
+        continue;
+      }
+      elem = $(el);
+      if (elem.is('[contenteditable]')) {
+        Paste.mountContenteditable(el);
+      } else if (elem.is('textarea, input:text')) {
+        Paste.mountTextarea(el);
+      } else {
+        Paste.mountNonInputable(el);
+      }
+      el._pastable = true;
+    }
+    return this;
+  };
+
   $.fn.pastableNonInputable = function() {
     var el, j, len, ref;
     ref = this;
@@ -259,6 +280,9 @@ https://github.com/layerssss/paste.js
       this._container.on('paste', (function(_this) {
         return function(ev) {
           var _i, clipboardData, file, fileType, item, j, k, l, len, len1, len2, pastedFilename, reader, ref, ref1, ref2, ref3, ref4, stringIsFilename, text;
+          if (!$(ev.target).closest($(ev.currentTarget))) {
+            return ev.preventDefault();
+          }
           _this.originalEvent = (ev.originalEvent !== null ? ev.originalEvent : null);
           _this._paste_event_fired = true;
           if (((ref = ev.originalEvent) != null ? ref.clipboardData : void 0) != null) {
