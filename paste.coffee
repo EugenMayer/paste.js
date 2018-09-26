@@ -10,21 +10,6 @@ $.paste = (pasteContainer) ->
   pm = Paste.mountNonInputable pasteContainer
   pm._container
 
-# KW MOD START
-$.fn.pastable = ->
-  for el in @
-    continue if el._pastable
-
-    elem = $(el);
-    if (elem.is('[contenteditable]'))
-      Paste.mountContenteditable(el)
-    else if (elem.is('textarea, input:text'))
-      Paste.mountTextarea el
-    else
-      Paste.mountNonInputable el
-    el._pastable = true
-  @
-# KW MOD END
 
 $.fn.pastableNonInputable = ->
   for el in @

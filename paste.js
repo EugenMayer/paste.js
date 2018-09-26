@@ -20,27 +20,6 @@ https://github.com/layerssss/paste.js
     return pm._container;
   };
 
-  $.fn.pastable = function() {
-    var el, elem, j, len, ref;
-    ref = this;
-    for (j = 0, len = ref.length; j < len; j++) {
-      el = ref[j];
-      if (el._pastable) {
-        continue;
-      }
-      elem = $(el);
-      if (elem.is('[contenteditable]')) {
-        Paste.mountContenteditable(el);
-      } else if (elem.is('textarea, input:text')) {
-        Paste.mountTextarea(el);
-      } else {
-        Paste.mountNonInputable(el);
-      }
-      el._pastable = true;
-    }
-    return this;
-  };
-
   $.fn.pastableNonInputable = function() {
     var el, j, len, ref;
     ref = this;
